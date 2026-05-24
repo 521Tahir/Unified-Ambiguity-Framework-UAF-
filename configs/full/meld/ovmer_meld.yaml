@@ -1,0 +1,46 @@
+baseline: ovmer
+dataset: meld
+data:
+  train_csv: /data/processed/meld/meld_train.csv
+  val_csv: data/processed/meld/meld_val.csv
+  test_csv:/data/processed/meld/meld_test.csv
+  num_classes: 7
+  label_col: emotion
+  text_col: text
+  audio_path_col: audio_path
+  video_path_col: video_path
+  num_frames: 8
+  frame_size: 224
+  sample_rate: 16000
+  max_audio_seconds: 6.0
+  context_turns: 5
+model:
+  text_model_name: roberta-base
+  audio_model_name: facebook/wav2vec2-base
+  video_model_name: google/vit-base-patch16-224-in21k
+  proj_dim: 256
+  dropout: 0.2
+  use_text: true
+  use_audio: true
+  use_video: true
+  n_heads: 4
+  clip_embed_dim: 512
+  w_proto: 0.3
+train:
+  seed: 42
+  epochs: 40
+  batch_size_per_gpu: 48
+  num_workers: 12
+  lr: 1.0e-05
+  weight_decay: 0.02
+  warmup_ratio: 0.1
+  amp: true
+  patience: 10
+  label_smoothing: 0.1
+  use_class_weight: sqrt
+  persistent_workers: true
+  prefetch_factor: 8
+  pin_memory: true
+logging:
+  run_name: ovmer_meld
+  out_dir: /experiments/results/meld/ovmer

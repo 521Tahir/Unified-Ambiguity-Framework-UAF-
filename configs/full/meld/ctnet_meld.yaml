@@ -1,0 +1,41 @@
+baseline: ctnet
+data:
+  audio_path_col: audio_path
+  frame_size: 224
+  label_col: emotion
+  max_audio_seconds: 6.0
+  num_classes: 7
+  num_frames: 8
+  sample_rate: 16000
+  test_csv: /data/processed/meld/meld_test.csv
+  text_col: text
+  train_csv: data/processed/meld/meld_train.csv
+  val_csv:/data/processed/meld/meld_val.csv
+  video_path_col: video_path
+dataset: meld
+logging:
+  out_dir: /experiments/results/meld/ctnet
+  run_name: ctnet_meld
+model:
+  audio_model_name: facebook/wav2vec2-base
+  dropout: 0.2
+  n_heads: 4
+  proj_dim: 256
+  text_model_name: roberta-base
+  use_audio: true
+  use_text: true
+  use_video: true
+  video_model_name: google/vit-base-patch16-224-in21k
+train:
+  amp: true
+  batch_size_per_gpu: 48
+  epochs: 20
+  lr: 2.0e-05
+  num_workers: 12
+  patience: 5
+  seed: 42
+  warmup_ratio: 0.06
+  weight_decay: 0.01
+  persistent_workers: true
+  prefetch_factor: 8
+  pin_memory: true

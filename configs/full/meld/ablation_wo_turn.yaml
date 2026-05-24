@@ -1,0 +1,57 @@
+data:
+  train_csv: /data/processed/meld/meld_train.csv
+  val_csv: /data/processed/meld/meld_val.csv
+  test_csv: /data/processed/meld/meld_test.csv
+  speaker_csv: /data/raw/meld/train_sent_emo.csv
+  num_classes: 7
+  label_col: emotion
+  text_col: text
+  audio_path_col: audio_path
+  video_path_col: video_path
+  num_frames: 8
+  frame_size: 224
+  sample_rate: 16000
+  max_audio_seconds: 6.0
+  context_turns: 5
+model:
+  text_model_name: roberta-base
+  audio_model_name: facebook/wav2vec2-base
+  video_model_name: google/vit-base-patch16-224-in21k
+  proj_dim: 256
+  dropout: 0.2
+  use_text: true
+  use_audio: true
+  use_video: true
+  use_gated_fusion: true
+  n_heads: 4
+chado:
+  backbone: ctnet
+  n_speakers: 7
+  use_causal: true
+  use_hyperbolic: true
+  use_ot: true
+  use_mad: true
+  w_causal: 0.003
+  w_hyperbolic: 0.01
+  w_ot: 0.002
+  w_mad: 0.5
+  w_speaker: 0.1
+  w_turn: 0.0
+  w_modal: 0.05
+  w_context: 0.05
+train:
+  seed: 123
+  epochs: 60
+  batch_size_per_gpu: 4
+  gradient_accumulation: 1
+  num_workers: 4
+  lr: 1.2e-05
+  weight_decay: 0.02
+  warmup_ratio: 0.12
+  amp: true
+  patience: 15
+  label_smoothing: 0.1
+  use_class_weight: sqrt
+logging:
+  run_name: chado_meld_wo_turn
+  out_dir: /experiments/results/meld/ablations/wo_turn/seed_42
