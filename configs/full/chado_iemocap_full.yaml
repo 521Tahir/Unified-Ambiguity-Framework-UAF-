@@ -1,0 +1,56 @@
+data:
+  train_csv: /data/manifests/iemocap/train.csv
+  val_csv: /data/manifests/iemocap/val.csv
+  test_csv: /data/manifests/iemocap/test.csv
+  num_classes: 4
+  max_text_len: 96
+  num_frames: 8
+  max_audio_seconds: 4.0
+model:
+  text_model_name: roberta-base
+  audio_model_name: facebook/wav2vec2-base
+  video_model_name: google/vit-base-patch16-224-in21k
+  proj_dim: 256
+  dropout: 0.18
+  use_text: true
+  use_audio: true
+  use_video: true
+  use_gated_fusion: true
+  n_heads: 4
+chado:
+  backbone: ctnet
+  n_speakers: 10
+  use_causal: true
+  use_hyperbolic: true        # radial/radius branch ON
+  use_ot: true                # OT branch ON
+  use_mad: true               # MAD weighting ON
+  proxy: mad
+  w_causal: 0.01
+  w_hyperbolic: 0.01
+  w_ot: 0.005
+  w_mad: 0.3
+  w_speaker: 0.12
+  w_turn: 0.05
+  w_modal: 0.05
+  w_context: 0.05
+  use_residual_factor: true
+train:
+  seed: 42
+  epochs: 10
+  batch_size_per_gpu: 8
+  gradient_accumulation: 1
+  num_workers: 4
+  prefetch_factor: 8
+  lr: 1.5e-05
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  amp: true
+  patience: 3
+  label_smoothing: 0.1
+  use_class_weight: sqrt
+  cache_eval_batches: true
+  find_unused_parameters: false
+  ddp_static_graph: true
+logging:
+  run_name: iemocap_full_argot
+  out_dir: experiments/results/iemocap/full_argot/seed_42
