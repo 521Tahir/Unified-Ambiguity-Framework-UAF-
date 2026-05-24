@@ -1,0 +1,36 @@
+baseline: mesca
+data:
+  max_audio_seconds: 4.0
+  max_text_len: 96
+  num_classes: 4
+  num_frames: 8
+  test_csv: /data/manifests/iemocap/test.csv
+  train_csv: /data/manifests/iemocap/train.csv
+  val_csv: /data/manifests/iemocap/val.csv
+dataset: iemocap
+logging:
+  out_dir: /experiments/results/iemocap/mesca
+  run_name: mesca_iemocap
+model:
+  audio_model_name: facebook/wav2vec2-base
+  dropout: 0.2
+  n_repvgg: 3
+  proj_dim: 256
+  text_model_name: roberta-base
+  use_audio: true
+  use_text: true
+  use_video: true
+  video_model_name: google/vit-base-patch16-224-in21k
+train:
+  amp: true
+  batch_size_per_gpu: 32
+  epochs: 20
+  lr: 2.0e-05
+  num_workers: 12
+  patience: 5
+  persistent_workers: true
+  pin_memory: true
+  prefetch_factor: 8
+  seed: 42
+  warmup_ratio: 0.06
+  weight_decay: 0.01

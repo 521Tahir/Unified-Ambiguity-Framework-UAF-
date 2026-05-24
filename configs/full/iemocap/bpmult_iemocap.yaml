@@ -1,0 +1,39 @@
+baseline: bpmult
+dataset: iemocap
+data:
+  train_csv: /data/manifests/iemocap/train.csv
+  val_csv: /data/manifests/iemocap/val.csv
+  test_csv: /data/manifests/iemocap/test.csv
+  num_classes: 4
+  max_text_len: 128
+  num_frames: 16
+  max_audio_seconds: 6.0
+model:
+  text_model_name: roberta-base
+  audio_model_name: facebook/wav2vec2-base
+  video_model_name: google/vit-base-patch16-224-in21k
+  proj_dim: 768
+  dropout: 0.1
+  use_text: true
+  use_audio: true
+  use_video: true
+  n_layers: 6
+  n_heads: 12
+train:
+  seed: 42
+  epochs: 5
+  batch_size_per_gpu: 16
+  num_workers: 12
+  lr: 2.0e-05
+  weight_decay: 0.01
+  warmup_ratio: 0.06
+  amp: true
+  patience: 100
+  pin_memory: true
+  persistent_workers: true
+  prefetch_factor: 8
+  compile: true
+  tf32: true
+logging:
+  run_name: bpmult_iemocap_gpu_max
+  out_dir: /experiments/results/iemocap/bpmult_gpu_max

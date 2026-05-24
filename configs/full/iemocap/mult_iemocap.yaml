@@ -1,0 +1,37 @@
+baseline: mult
+dataset: iemocap
+data:
+  train_csv: /data/manifests/iemocap/train.csv
+  val_csv: /data/manifests/iemocap/val.csv
+  test_csv: /data/manifests/iemocap/test.csv
+  num_classes: 4
+  max_text_len: 96
+  num_frames: 8
+  max_audio_seconds: 4.0
+model:
+  text_model_name: roberta-base
+  audio_model_name: facebook/wav2vec2-base
+  video_model_name: google/vit-base-patch16-224-in21k
+  proj_dim: 256
+  dropout: 0.2
+  use_text: true
+  use_audio: true
+  use_video: true
+  n_layers: 3
+  n_heads: 4
+train:
+  seed: 42
+  epochs: 20
+  batch_size_per_gpu: 32
+  num_workers: 12
+  lr: 2.0e-05
+  weight_decay: 0.01
+  warmup_ratio: 0.06
+  amp: true
+  patience: 5
+  persistent_workers: true
+  prefetch_factor: 8
+  pin_memory: true
+logging:
+  run_name: mult_iemocap
+  out_dir: /experiments/results/iemocap/mult

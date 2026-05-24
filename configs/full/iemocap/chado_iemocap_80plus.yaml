@@ -1,0 +1,57 @@
+data:
+  train_csv: /data/manifests/iemocap/train.csv
+  val_csv:   /data/manifests/iemocap/val.csv
+  test_csv:  /data/manifests/iemocap/test.csv
+  num_classes: 4
+  max_text_len: 96
+  num_frames: 8
+  max_audio_seconds: 4.0
+
+model:
+  text_model_name: roberta-base         
+  audio_model_name: facebook/wav2vec2-base
+  video_model_name: google/vit-base-patch16-224-in21k
+  proj_dim: 256
+  dropout: 0.15
+  use_text: true
+  use_audio: true
+  use_video: true
+  use_gated_fusion: true
+  n_heads: 4
+
+chado:
+  backbone: ctnet
+  use_causal: true
+  use_hyperbolic: true
+  use_ot: true
+  use_mad: true
+  n_speakers: 10
+  # Very low regularizer weights — ablations show high weights hurt IEMOCAP
+  w_causal: 0.008
+  w_hyperbolic: 0.008
+  w_ot: 0.004
+  w_mad: 0.25
+  # Stronger factor supervision — pushes heads toward their intended signals
+  w_speaker: 0.20
+  w_turn: 0.10
+  w_modal: 0.08
+  w_context: 0.05
+
+train:
+  seed: 42
+  epochs: 70
+  batch_size_per_gpu: 4         
+  gradient_accumulation: 3       # effective batch = 4×3×5GPUs = 60
+  num_workers: 4
+  lr: 6.0e-06                    # lower LR suits roberta-large fine-tuning
+  weight_decay: 0.01
+  warmup_ratio: 0.12
+  amp: true
+  patience: 15
+  label_smoothing: 0.05          # less smoothing — helps neutral distinction
+  use_class_weight: neutral_boost
+  neutral_boost_factor: 1.8      # directly address neutral's 68% recall
+
+logging:
+  run_name: chado_iemocap_80plus
+  out_dir: /experiments/results/iemocap/chado_80plus
