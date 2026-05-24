@@ -1,0 +1,47 @@
+data:
+  train_manifest: /data/manifests/mosei/train.jsonl
+  val_manifest: /data/manifests/mosei/val.jsonl
+  test_manifest: /data/manifests/mosei/test.jsonl
+  num_classes: 6
+  max_audio_len: 50
+  max_video_len: 30
+  label_thr: 0.0
+model:
+  text_model_name: roberta-base
+  d_model: 256
+  use_audio: true
+  use_video: true
+  modality_dropout: 0.1
+chado:
+  use_causal: false
+  use_hyperbolic: true
+  use_ot: true
+  use_mad: true
+  w_causal: 0.0
+  w_hyperbolic: 0.005
+  w_ot: 0.002
+  w_mad: 0.02
+  mad_gamma: 0.5
+  use_residual_factor: false
+  ot_sigma: 0.05
+  ot_eps: 0.1
+  ot_iters: 20
+train:
+  seed: 42
+  epochs: 40
+  batch_size_per_gpu: 32
+  gradient_accumulation: 1
+  num_workers: 4
+  prefetch_factor: 8
+  lr: 2.0e-05
+  weight_decay: 0.01
+  warmup_ratio: 0.1
+  amp: true
+  patience: 10
+  loss: bce_sqrt
+  cache_eval_batches: true
+  find_unused_parameters: false
+  ddp_static_graph: true
+logging:
+  run_name: mosei_comp_abl_wo_causal
+  out_dir: experiments/results/mosei/component_ablations/wo_causal/seed_42

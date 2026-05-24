@@ -1,0 +1,65 @@
+data:
+  train_manifest: /data/processed/mosei/mosei_utt_train.jsonl
+  val_manifest:   /data/processed/mosei/mosei_utt_val.jsonl
+  test_manifest:  data/processed/mosei/mosei_utt_test.jsonl
+
+  num_classes: 6
+  task: "6class_multilabel"
+
+  csd_labels:  data/raw/CMU-MOSEI/labels/CMU_MOSEI_Labels.csd
+  csd_words:   /data/raw/CMU-MOSEI/languages/CMU_MOSEI_TimestampedWordVectors.csd
+  csd_audio:   /data/raw/CMU-MOSEI/acoustics/CMU_MOSEI_COVAREP.csd
+  csd_visual:  /data/raw/CMU-MOSEI/visuals/CMU_MOSEI_VisualFacet42.csd
+
+  max_text_len: 96
+  max_audio_len: 50
+  max_video_len: 30
+  label_thr: 0.0
+
+model:
+  text_model_name: roberta-base
+  d_model: 256
+  use_audio: true
+  use_video: true
+  modality_dropout: 0.1
+
+chado:
+  use_causal: true
+  use_hyperbolic: true
+  use_ot: true
+  use_mad: false
+
+  w_causal: 0.002
+  w_hyperbolic: 0.005
+  w_ot: 0.01
+  w_mad: 0.0
+
+  mad_gamma: 0.5
+  ot_sigma: 0.05
+  ot_eps: 0.1
+  ot_iters: 20
+  use_residual_factor: true
+
+train:
+  seed: 42
+  epochs: 10
+  batch_size_per_gpu: 64
+  num_workers: 8
+  prefetch_factor: 8
+
+  lr: 1.2e-05
+  weight_decay: 0.01
+  warmup_ratio: 0.10
+  gradient_accumulation: 1
+  amp: true
+  patience: 3
+
+  loss: bce_sqrt
+
+  cache_eval_batches: true
+  find_unused_parameters: false
+  ddp_static_graph: true
+
+logging:
+  run_name: mosei_comp_abl_wo_mad
+  out_dir: /experiments/results/mosei/component_ablations/wo_mad/seed_42

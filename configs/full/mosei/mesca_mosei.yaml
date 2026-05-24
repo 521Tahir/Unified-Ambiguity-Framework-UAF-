@@ -1,0 +1,35 @@
+baseline: mesca
+data:
+  csd_audio: /data/raw/CMU-MOSEI/acoustics/CMU_MOSEI_COVAREP.csd
+  csd_labels: /data/raw/CMU-MOSEI/labels/CMU_MOSEI_Labels.csd
+  csd_visual: /data/raw/CMU-MOSEI/visuals/CMU_MOSEI_VisualFacet42.csd
+  csd_words: /data/raw/CMU-MOSEI/languages/CMU_MOSEI_TimestampedWordVectors.csd
+  max_text_len: 96
+  num_classes: 6
+  task: 6class_multilabel
+  test_manifest: /data/processed/mosei/mosei_utt_test.jsonl
+  train_manifest: /data/processed/mosei/mosei_utt_train.jsonl
+  val_manifest: /data/processed/mosei/mosei_utt_val.jsonl
+logging:
+  out_dir: /experiments/results/mosei/mesca
+  run_name: mesca_mosei
+model:
+  d_model: 256
+  dropout: 0.2
+  n_repvgg: 3
+  text_model_name: roberta-base
+  use_audio: true
+  use_video: true
+train:
+  amp: true
+  batch_size_per_gpu: 64
+  epochs: 40
+  lr: 2.0e-05
+  num_workers: 12
+  patience: 10
+  persistent_workers: true
+  pin_memory: true
+  prefetch_factor: 8
+  seed: 42
+  warmup_ratio: 0.1
+  weight_decay: 0.01
