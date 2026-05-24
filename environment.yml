@@ -1,0 +1,32 @@
+name: UAF
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - cudatoolkit=11.8
+  - pytorch=2.1.2
+  - torchvision=0.16.2
+  - torchaudio=2.1.2
+  - pip:
+    - transformers==4.40.2
+    - tokenizers==0.19.1
+    - accelerate==0.29.3
+    - datasets==2.19.0
+    - numpy==1.26.4
+    - pandas==2.2.2
+    - scikit-learn==1.4.2
+    - scipy==1.13.0
+    - matplotlib==3.8.4
+    - seaborn==0.13.2
+    - opencv-python==4.9.0.80
+    - soundfile==0.12.1
+    - librosa==0.10.2
+    - tqdm==4.66.2
+    - pyyaml==6.0.1
+    - safetensors==0.4.3
+    - mmsdk @ git+https://github.com/CMU-MultiComp-Lab/CMU-MultimodalSDK.git
