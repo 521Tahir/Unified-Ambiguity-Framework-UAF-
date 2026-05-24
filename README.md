@@ -1,55 +1,5 @@
 
 
-## Repository Structure
-
-```
-UAF/
-├── models/chado/          
-│   ├── model.py          
-│   ├── factor.py          
-│   ├── radial.py     
-│   ├── ot.py              
-│   ├── mad.py             
-│   ├── proxy.py           # Ambiguity proxies: MAD, Entropy, Margin, MC-Var, BALD
-│   ├── losses.py          # BCE-sqrt and auxiliary losses
-│   ├── objective.py       # Combined training objective
-│   └── calibration.py     # ECE / calibration utilities
-├── models/fusion/         # Trimodal and feature-based fusion
-├── models/losses/         # Asymmetric loss
-├── datasets/              # Dataset loaders
-│   ├── iemocap/           # IEMOCAP raw-media loader + feature cache
-│   ├── meld/              # MELD raw-media loader
-│   └── mosei/             # CMU-MOSEI CSD feature loader
-├── training/engine/       # DDP trainer, optimizer utilities
-├── evaluation/            # Metrics, calibration, ambiguity, significance
-├── baselines/             # All baseline implementations (MulT, CTNet, MM-DFN, etc.)
-├── scripts/
-│   ├── train/             # Training entry points per dataset
-│   ├── eval/              # Evaluation and result aggregation scripts
-│   ├── preprocess/        # Data preprocessing scripts
-│   ├── ablations/         # Ablation study runners
-│   ├── plots/             # Figure generation scripts
-│   └── analysis/          # Qualitative and representation analysis
-├── configs/               # YAML configs for all experiments
-│   ├── iemocap/
-│   ├── meld/
-│   └── mosei/
-├── data/
-│   ├── processed/         # Preprocessed manifests (.jsonl)
-│   └── manifests/         # Dataset split manifests
-├── experiments/
-│   ├── results/           # JSON result files (no checkpoints)
-│   └── figures/           # Generated paper figures
-├── logs/
-│   ├── results_20ep/      # Clean 20-epoch training logs (all proxies, all datasets)
-│   └── proxy_20ep/        # Per-proxy raw training logs
-├── environment.yml        # Conda environment
-├── requirements.txt       # Pip requirements
-└── FILE_STRUCTURE.txt     # Complete file/folder listing
-```
-
----
-
 ## Environment Setup
 
 ```bash
